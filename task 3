@@ -1,0 +1,57 @@
+// petdog.h
+#ifndef PETDOG_H
+#define PETDOG_H
+
+#include <string>
+
+class Locomotion {
+public:
+    virtual void walk() const = 0;
+    virtual void stationary() const = 0;
+    virtual void run() const = 0;
+
+    virtual ~Locomotion();
+};
+
+class Action {
+public:
+    virtual void feed() const = 0;
+    virtual void play() const = 0;
+
+    virtual ~Action();
+};
+
+class Pet {
+public:
+    Pet(const std::string& name, int age);
+    virtual ~Pet();
+
+    virtual void makeSound() const = 0;  // Pure virtual method for making a sound
+
+    // Other common methods for pets
+
+protected:
+    std::string name;
+    int age;
+};
+
+class Dog : public Pet, public Locomotion, public Action {
+public:
+    Dog(const std::string& name, int age, const std::string& breed);
+
+    void makeSound() const override;
+
+    // Methods from Locomotion
+    void walk() const override;
+    void stationary() const override;
+    void run() const override;
+
+    // Methods from Action
+    void feed() const override;
+    void play() const override;
+
+private:
+    std::string breed;
+};
+
+#endif // PETDOG_H
